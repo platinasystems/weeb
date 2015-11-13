@@ -1,0 +1,1 @@
+/* java -jar /home/eliot/cavetocellar/closure-compiler/compiler.jar --js ../../foundation/js/foundation/{foundation.js,foundation.*.js} --js_output_file foundation.min.js --language_in ECMASCRIPT5  --compilation_level SIMPLE_OPTIMIZATIONS */
