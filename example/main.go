@@ -3,8 +3,8 @@
 package main
 
 import (
+	"github.com/platinasystems/weeb"
 	"golang.org/x/net/websocket"
-	"weeb"
 
 	"bytes"
 	"io"
@@ -14,15 +14,15 @@ import (
 )
 
 //go:generate weebgen -url /js/foundation_deps.min.js -no-inline-data internal/js/foundation_deps/foundation_deps.min.js
-import _ "weeb/example/internal/js/foundation_deps"
+import _ "github.com/platinasystems/weeb/example/internal/js/foundation_deps"
 
 //go:generate weebgen  -url /js/foundation.min.js -no-inline-data internal/js/foundation/foundation.min.js
-import _ "weeb/example/internal/js/foundation"
+import _ "github.com/platinasystems/weeb/example/internal/js/foundation"
 
 //go:generate weebgen -url /css/eg.min.css -no-inline-data internal/css/eg/eg.min.css
-import _ "weeb/example/internal/css/eg"
+import _ "github.com/platinasystems/weeb/example/internal/css/eg"
 
-//go:generate sh -c "gopherjs build -o js.min.js weeb/example && weebgen -url /js/js.min.js -no-inline-data -package main js.min.js"
+//go:generate sh -c "gopherjs build -o js.min.js github.com/platinasystems/weeb/example && weebgen -url /js/js.min.js -no-inline-data -package main js.min.js"
 
 func handle_content(res http.ResponseWriter, req *http.Request) {
 	c, found := weeb.ContentByPath[req.URL.Path]

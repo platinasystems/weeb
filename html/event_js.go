@@ -4,7 +4,7 @@ package html
 
 import (
 	"github.com/gopherjs/gopherjs/js"
-	"weeb/r2"
+	"github.com/platinasystems/weeb/r2"
 )
 
 type Event struct {

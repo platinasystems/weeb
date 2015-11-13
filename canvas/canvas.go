@@ -1,13 +1,11 @@
-//+build js
-
 package canvas
 
 import (
-	"fmt"
-
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
-	"weeb/r2"
+	"github.com/platinasystems/weeb/r2"
+
+	"fmt"
 )
 
 type CompositeOperation int

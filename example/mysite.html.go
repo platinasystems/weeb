@@ -4,11 +4,10 @@ import (
 	"fmt"
 	"math/rand"
 
-	"weeb/canvas"
-	//	_ "weeb/fndtn"
-	"weeb"
-	. "weeb/html"
-	"weeb/r2"
+	"github.com/platinasystems/weeb/canvas"
+	"github.com/platinasystems/weeb"
+	. "github.com/platinasystems/weeb/html"
+	"github.com/platinasystems/weeb/r2"
 )
 
 type ExecCommand struct {

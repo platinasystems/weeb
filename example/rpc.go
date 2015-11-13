@@ -1,7 +1,7 @@
 package main
 
 import (
-	"weeb"
+	"github.com/platinasystems/weeb"
 
 	"fmt"
 	"log"

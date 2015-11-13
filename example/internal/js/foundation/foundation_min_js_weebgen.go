@@ -5,12 +5,12 @@
 
 package foundation_min_js
 
-import "weeb"
+import "github.com/platinasystems/weeb"
 
 func init() {
 	c := &weeb.Content{
 		URLPath:              "/js/foundation.min.js",
-		UnixTimeLastModified: 1447455001, // 2015-11-13 22:50:01.788268066 +0000 UTC
+		UnixTimeLastModified: 1447457446, // 2015-11-13 23:30:46.199665884 +0000 UTC
 		ContentType:          "text/javascript",
 		ContentEncoding:      "gzip",
 		FilePath:             "internal/js/foundation/foundation_min_js.gz",

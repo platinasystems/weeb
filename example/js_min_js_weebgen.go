@@ -5,12 +5,12 @@
 
 package main
 
-import "weeb"
+import "github.com/platinasystems/weeb"
 
 func init() {
 	c := &weeb.Content{
 		URLPath:              "/js/js.min.js",
-		UnixTimeLastModified: 1447455002, // 2015-11-13 22:50:02.312331191 +0000 UTC
+		UnixTimeLastModified: 1447457446, // 2015-11-13 23:30:46.63846586 +0000 UTC
 		ContentType:          "text/javascript",
 		ContentEncoding:      "gzip",
 		FilePath:             "./js_min_js.gz",
