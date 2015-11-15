@@ -10,7 +10,7 @@ import "github.com/platinasystems/weeb"
 func init() {
 	c := &weeb.Content{
 		URLPath:              "/css/eg.min.css",
-		UnixTimeLastModified: 1447457446, // 2015-11-13 23:30:46.212405822 +0000 UTC
+		UnixTimeLastModified: 1447625089, // 2015-11-15 22:04:49.948173836 +0000 UTC
 		ContentType:          "text/css",
 		ContentEncoding:      "gzip",
 		FilePath:             "internal/css/eg/eg_min_css.gz",
