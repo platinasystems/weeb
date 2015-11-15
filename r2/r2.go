@@ -21,11 +21,11 @@ func (a Angle) Radians() float64 {
 	return n * math.Pi
 }
 
-func (x X) X() float64  { return real(x) }
-func (x X) Y() float64  { return imag(x) }
-func XY(x, y float64) X { return X(complex(x, y)) }
-func XY1(x float64) X   { return XY(x, x) }
-func Conj(x X) X        { return XY(real(x), -imag(x)) }
-func Norm(x X) float64  { return math.Hypot(x.X(), x.Y()) }
+func (x X) X() float64   { return real(x) }
+func (x X) Y() float64   { return imag(x) }
+func XY(x, y float64) X  { return X(complex(x, y)) }
+func XY1(x float64) X    { return XY(x, x) }
+func (x X) Conj() X      { return XY(real(x), -imag(x)) }
+func (x X) Abs() float64 { return math.Hypot(x.X(), x.Y()) }
 
 type Rect struct{ X, Size X }
