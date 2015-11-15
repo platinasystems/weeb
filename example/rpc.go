@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/platinasystems/elib/elog"
 	"github.com/platinasystems/weeb"
 
 	"fmt"
@@ -56,4 +57,9 @@ func HelloRpcClient(r *weeb.Rpc) {
 			time.Sleep(sleep)
 		}
 	}
+}
+
+func (l *Listener) GetEventLog(args struct{}, ack *elog.Log) (err error) {
+	*ack = *elog.DefaultLog
+	return
 }
