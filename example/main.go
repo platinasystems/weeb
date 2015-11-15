@@ -3,11 +3,13 @@
 package main
 
 import (
+	"github.com/platinasystems/elib/elog"
 	"github.com/platinasystems/weeb"
 	"golang.org/x/net/websocket"
 
 	"bytes"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -67,8 +69,12 @@ func handle_ws(ws *websocket.Conn) {
 	l := &Listener{}
 	r := weeb.NewRpc(ws, l)
 	l.rpc = r
-	go HelloRpcClient(r)
-	r.Serve()
+	// go HelloRpcClient(r)
+	err := r.Serve()
+	if err != io.EOF {
+		log.Printf("%v", err)
+	}
+	ws.Close()
 }
 
 func main() {
@@ -76,6 +82,8 @@ func main() {
 	http.HandleFunc("/css/", handle_content)
 	http.HandleFunc("/", root)
 	http.Handle("/ws/rpc/", websocket.Handler(handle_ws))
+
+	elog.Enable(true)
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {

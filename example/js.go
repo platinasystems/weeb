@@ -193,7 +193,7 @@ func canvasDraw(c jquery.JQuery) {
 
 	d, _ := getDrawerListener(c)
 	if d != nil {
-		d.Draw(canvasContext(c))
+		go d.Draw(canvasContext(c))
 	}
 }
 
@@ -229,7 +229,7 @@ func main() {
 		rpc = weeb.NewRpc(ws, l)
 		l.rpc = rpc
 
-		go HelloRpcClient(rpc)
+		// go HelloRpcClient(rpc)
 		go rpc.Serve()
 	}
 

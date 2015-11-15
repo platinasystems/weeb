@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/platinasystems/weeb/canvas"
 	"github.com/platinasystems/weeb"
+	"github.com/platinasystems/weeb/canvas"
 	. "github.com/platinasystems/weeb/html"
 	"github.com/platinasystems/weeb/r2"
 )
@@ -42,6 +42,7 @@ func initSite() *weeb.Site {
 			"/page/":  &pathPage{},
 			"/exec":   &execPage{},
 			"/canvas": &myCanvasPage{},
+			"/elog":   &myElogPage{},
 		},
 	}
 
@@ -93,6 +94,7 @@ func (s *standardBody) Body(d *Doc) BodyVec {
 							d.LI(".heading", "Heading Two"),
 							d.LI(d.A("href=/exec", "replace=page_body", "Exec")),
 							d.LI(d.A("href=/canvas", "replace=page_body", "Canvas")),
+							d.LI(d.A("href=/elog", "replace=page_body", "Event Log")),
 							d.LI(d.A("href=#", "Link 3")),
 							d.LI(d.A("href=#", "Link 4")),
 						)))),
@@ -192,7 +194,7 @@ func (f *foo) Body(d *Doc) BodyVec {
 }
 
 func (f *foo) Click(e *MouseEvent) {
-	print(e)
+	fmt.Printf("here %v\n", e)
 }
 
 type rootPage struct{}
@@ -373,6 +375,38 @@ func (p *myCanvasPage) Body(path string, d *Doc) BodyVec {
 		{id: "canvas2", greeting: "Hello 2"},
 	}
 	bv := BodyVec{d.H2("Canvas")}
+	for i := range cs {
+		p.Page.SetDrawer(cs[i].id, &cs[i])
+		p.Page.SetListener(cs[i].id, &cs[i])
+		bv = append(bv, d.Div(&cs[i]))
+	}
+	return bv
+}
+
+type myElog struct {
+	id, greeting string
+}
+
+func (c *myElog) Body(d *Doc) BodyVec {
+	return BodyVec{
+		d.Canvas("#"+c.id, "aspect=2"),
+	}
+}
+
+type myElogPage struct {
+	canvas.Page
+}
+
+func (p *myElogPage) PageBody(path string, d *Doc) BodyVec {
+	s := &standardBody{BodyVec: p.Body(path, d)}
+	return s.Body(d)
+}
+
+func (p *myElogPage) Body(path string, d *Doc) BodyVec {
+	cs := []myElog{
+		{id: "elog_canvas1", greeting: "Elog Hello"},
+	}
+	bv := BodyVec{d.H2("Event Log")}
 	for i := range cs {
 		p.Page.SetDrawer(cs[i].id, &cs[i])
 		p.Page.SetListener(cs[i].id, &cs[i])
