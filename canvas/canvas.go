@@ -57,7 +57,12 @@ type Context struct {
 	StrokeStyle              string  `js:"strokeStyle"`
 	TextAlign                string  `js:"textAlign"`    // "start" (default), "end", "left", "right", "center"
 	TextBaseline             string  `js:"textBaseline"` // "top", "hanging", "middle", "alphabetic" (default), "ideographic", "bottom"
-	Size                     r2.X
+
+	// Canvas size in points.
+	Size r2.X
+
+	// Screen resolution in pixels per point (and inverse).
+	PixelsPerPoint, PointsPerPixel float64
 }
 
 // (x,y) coordinate as complex number for easy arithmetic.
@@ -179,6 +184,34 @@ func (c *Context) SetStrokeStyle(x interface{}) {
 	c.StrokeStyle = c.Style(x)
 }
 
+type ImageData struct {
+	*js.Object
+	Width  float64 `js:"width"`
+	Height float64 `js:"height"`
+	Data   []byte  `js:"data"`
+}
+
+func (c *Context) DrawImage(elt string, srcX, srcSize, dstX, dstSize r2.X) {}
+func (c *Context) CreateImageData(size r2.X) (img *ImageData)              { return }
+func (c *Context) GetImageData(x, size r2.X) (img *ImageData)              { return }
+func (c *Context) PutImageData(img *ImageData, dx, dirtyX, dirtySize r2.X) { return }
+
+/*
+Not yet:
+
+createImageData: createImageData()
+drawImage: drawImage()
+getImageData: getImageData()
+putImageData: putImageData()
+
+createLinearGradient: createLinearGradient()
+createPattern: createPattern()
+createRadialGradient: createRadialGradient()
+
+drawFocusIfNeeded: drawFocusIfNeeded()
+getContextAttributes: getContextAttributes()
+*/
+
 // Drawer is an interface for types which know how to draw with a Context.
 type Drawer interface {
 	Draw(c *Context)
@@ -222,19 +255,3 @@ func (p *Page) SetListener(id string, d Listener) {
 	}
 	p.ListenerById[id] = d
 }
-
-/*
-Not yet:
-
-createImageData: createImageData()
-drawImage: drawImage()
-getImageData: getImageData()
-putImageData: putImageData()
-
-createLinearGradient: createLinearGradient()
-createPattern: createPattern()
-createRadialGradient: createRadialGradient()
-
-drawFocusIfNeeded: drawFocusIfNeeded()
-getContextAttributes: getContextAttributes()
-*/

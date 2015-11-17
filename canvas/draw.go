@@ -4,10 +4,13 @@ import (
 	"github.com/platinasystems/weeb/r2"
 )
 
-func (c *Context) RoundedRect(x, s r2.X, r float64) {
+// Draw rounded rectangle centered about given point.
+func (c *Context) CenteredRoundedRect(center, size r2.X, cornerRadius float64) {
+	r := cornerRadius
+	z := center
+
 	dx, dy := r2.XY(r, 0), r2.XY(0, r)
-	dz := s / 2
-	z := x + dz
+	dz := size / 2
 	dzc := dz.Conj()
 
 	// Upper left, upper right, lower left, lower right corners.
@@ -19,4 +22,8 @@ func (c *Context) RoundedRect(x, s r2.X, r float64) {
 	c.ArcTo(lr, lr-dx, r)
 	c.ArcTo(ll, ll-dy, r)
 	c.ArcTo(ul, ul+dx, r)
+}
+
+func (c *Context) RoundedRect(x, size r2.X, cornerRadius float64) {
+	c.CenteredRoundedRect(x+size/2, size, cornerRadius)
 }
