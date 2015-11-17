@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 
+	"github.com/platinasystems/elib/elog"
 	"github.com/platinasystems/weeb"
 	"github.com/platinasystems/weeb/canvas"
 	. "github.com/platinasystems/weeb/html"
@@ -384,12 +385,15 @@ func (p *myCanvasPage) Body(path string, d *Doc) BodyVec {
 }
 
 type myElog struct {
-	id, greeting string
+	view        elog.View
+	tb          elog.TimeBounds
+	max, margin r2.X
+	id          string
 }
 
 func (c *myElog) Body(d *Doc) BodyVec {
 	return BodyVec{
-		d.Canvas("#"+c.id, "aspect=2"),
+		d.Canvas("#"+c.id, "aspect=1.5"),
 	}
 }
 
@@ -404,7 +408,7 @@ func (p *myElogPage) PageBody(path string, d *Doc) BodyVec {
 
 func (p *myElogPage) Body(path string, d *Doc) BodyVec {
 	cs := []myElog{
-		{id: "elog_canvas1", greeting: "Elog Hello"},
+		{id: "elog_canvas1"},
 	}
 	bv := BodyVec{d.H2("Event Log")}
 	for i := range cs {

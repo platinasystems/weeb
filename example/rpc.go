@@ -59,7 +59,8 @@ func HelloRpcClient(r *weeb.Rpc) {
 	}
 }
 
-func (l *Listener) GetEventLog(args struct{}, ack *elog.Log) (err error) {
-	*ack = *elog.DefaultLog
+func (l *Listener) GetEventView(args struct{}, ack *elog.View) (err error) {
+	v := elog.NewView()
+	*ack = *v
 	return
 }

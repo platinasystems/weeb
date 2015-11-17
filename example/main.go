@@ -8,10 +8,12 @@ import (
 	"golang.org/x/net/websocket"
 
 	"bytes"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 	"time"
 )
 
@@ -24,7 +26,7 @@ import _ "github.com/platinasystems/weeb/example/internal/js/foundation"
 //go:generate weebgen -url /css/eg.min.css -no-inline-data internal/css/eg/eg.min.css
 import _ "github.com/platinasystems/weeb/example/internal/css/eg"
 
-//go:generate sh -c "gopherjs build -o js.min.js github.com/platinasystems/weeb/example && weebgen -url /js/js.min.js -no-inline-data -package main js.min.js"
+//go:generate sh -c "gopherjs build -m -o js.min.js github.com/platinasystems/weeb/example && weebgen -url /js/js.min.js -no-inline-data -package main js.min.js"
 
 func handle_content(res http.ResponseWriter, req *http.Request) {
 	c, found := weeb.ContentByPath[req.URL.Path]
@@ -77,6 +79,16 @@ func handle_ws(ws *websocket.Conn) {
 	ws.Close()
 }
 
+func elogDumpOnSignal() {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	<-c
+	w := os.Stderr
+	fmt.Fprintf(w, "%d events in log:\n", elog.Len())
+	elog.Print(w)
+	os.Exit(0)
+}
+
 func main() {
 	http.HandleFunc("/js/", handle_content)
 	http.HandleFunc("/css/", handle_content)
@@ -84,6 +96,11 @@ func main() {
 	http.Handle("/ws/rpc/", websocket.Handler(handle_ws))
 
 	elog.Enable(true)
+	go elogDumpOnSignal()
+
+	for i := 0; i < 256; i++ {
+		elog.GenEvent("main %d", i)
+	}
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
