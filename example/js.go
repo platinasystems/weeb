@@ -150,8 +150,12 @@ func canvasContext(c jquery.JQuery) (x *canvas.Context) {
 
 	h := float64(c.Width())
 	w := float64(c.Height())
-	x.Size = r2.XY(h/screenPixelsPerPoint, w/screenPixelsPerPoint)
 
+	x.PixelsPerPoint = screenPixelsPerPoint
+	x.PointsPerPixel = 1 / screenPixelsPerPoint
+	x.Size = r2.XY(h*x.PointsPerPixel, w*x.PointsPerPixel)
+
+	// Always work in points not pixels.
 	x.Scale(r2.XY1(screenPixelsPerPoint))
 
 	return
